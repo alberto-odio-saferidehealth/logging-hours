@@ -225,16 +225,8 @@ describe("log work hours", () => {
                       const ticketsToLogCount = ticketsWithoutLog.length;
                       const hoursPerTicket = 64 / ticketsToLogCount;
 
-                      cy.log(
-                        `Total tickets to log: ${ticketsToLogCount}, each will be assigned ${hoursPerTicket.toFixed(
-                          2
-                        )} hours.`
-                      );
-
                       // Ensure we are processing the first ticket first
                       if (ticketsToLogCount > 0) {
-                        cy.log("Processing the first ticket...");
-
                         // Click the first ticket explicitly using data-testid for reliability
                         cy.wrap(ticketsWithoutLog[0])
                           .scrollIntoView()
@@ -245,7 +237,6 @@ describe("log work hours", () => {
                             )
                               .invoke("text")
                               .then((firstTicketText) => {
-                                cy.log(`First ticket text: ${firstTicketText}`);
                                 cy.contains(firstTicketText).click({
                                   force: true,
                                 });
@@ -281,12 +272,6 @@ describe("log work hours", () => {
                           .should("not.be.disabled") // Wait until it's no longer disabled
                           .click({ force: true }); // Force the click
 
-                        cy.log(
-                          `Logged ${hoursPerTicket.toFixed(
-                            2
-                          )} hours for the first ticket`
-                        );
-
                         // Wait to make sure it completes logging
                         cy.wait(2000);
                       }
@@ -295,8 +280,6 @@ describe("log work hours", () => {
                       if (ticketsToLogCount > 1) {
                         cy.wrap(ticketsWithoutLog.slice(1)).each(
                           ($ticket, index) => {
-                            cy.log(`Processing ticket #${index + 2}`);
-
                             // Click the next ticket using the data-testid
                             cy.wrap($ticket)
                               .scrollIntoView()
@@ -307,9 +290,6 @@ describe("log work hours", () => {
                                 )
                                   .invoke("text")
                                   .then((ticketText) => {
-                                    cy.log(
-                                      `Processing ticket text: ${ticketText}`
-                                    );
                                     cy.contains(ticketText).click({
                                       force: true,
                                     });
@@ -344,12 +324,6 @@ describe("log work hours", () => {
                               .should("exist") // Ensure the button exists
                               .should("not.be.disabled") // Wait until it's no longer disabled
                               .click({ force: true }); // Force the click
-
-                            cy.log(
-                              `Logged ${hoursPerTicket.toFixed(
-                                2
-                              )} hours for ticket #${index + 2}`
-                            );
 
                             // Wait to make sure it completes logging
                             cy.wait(2000);
