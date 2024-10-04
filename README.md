@@ -1,1 +1,1 @@
-This repo is a test to log hours automatically into SR Jira tickets using cypress
+There are a couple of pre requisites to make this code work, ask the owner for more details
