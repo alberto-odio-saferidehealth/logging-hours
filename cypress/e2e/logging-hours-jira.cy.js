@@ -38,6 +38,18 @@ describe("log work hours", () => {
     // Visit Jira filter URL
     cy.visit("https://saferidehealth.atlassian.net/issues/?filter=10221");
 
+    // Check if we are in BASIC mode and force a switch to JQL if necessary
+    cy.get('label[for="toggle-buttons-3-advanced"]', { timeout: 10000 }).then(
+      ($label) => {
+        cy.get('div[class*="css"]').then(($div) => {
+          if ($div.hasClass("css-zkrq6v")) {
+            // We are in BASIC mode, click the label to switch to JQL
+            cy.wrap($label).click();
+          }
+        });
+      }
+    );
+
     // Wait for the profile image (span) to become visible and then click on it
     cy.get("span.css-opco9n", { timeout: 10000 }).should("be.visible").click();
 
@@ -45,8 +57,6 @@ describe("log work hours", () => {
     cy.get("div._vwz4gktf")
       .invoke("text")
       .then((userName) => {
-        cy.log(`The current user is: ${userName.trim()}`);
-
         // Wait for the JQL editor input to become available
         cy.get('div[data-testid="jql-editor-input"]', { timeout: 60000 })
           .should("be.visible")
@@ -56,7 +66,6 @@ describe("log work hours", () => {
               const sprintValue = win.prompt(
                 "Please enter the sprint ID (e.g., 535):"
               );
-
               if (sprintValue) {
                 // Create the JQL query
                 const jqlQuery = `project = "GL" AND ("qa owner[user picker (single user)]" = currentUser() OR "developer owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done in Stage", "PO validation") ORDER BY created DESC`;
