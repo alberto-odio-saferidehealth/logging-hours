@@ -3,7 +3,6 @@ beforeEach(() => {
   cy.clearLocalStorage();
 });
 describe("log work hours", () => {
-  // Ignore the first test case as per your request
   it("logs into Jira and applies the filter for a specific sprint", () => {
     // Handle exceptions for ResizeObserver
     cy.on("uncaught:exception", (err) => {
@@ -68,7 +67,7 @@ describe("log work hours", () => {
               );
               if (sprintValue) {
                 // Create the JQL query
-                const jqlQuery = `project = "GL" AND ("qa owner[user picker (single user)]" = currentUser() OR "developer owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done in Stage", "PO validation") ORDER BY created DESC`;
+                const jqlQuery = `project = "GL2" AND ("qa owner[user picker (single user)]" = currentUser() OR "developer owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done in Stage", "PO validation") ORDER BY created DESC`;
                 // Focus the JQL editor, clear existing content, and type the query
                 cy.wrap($editor).click().focused().clear();
                 cy.wrap($editor).type(`${jqlQuery}{enter}`, { delay: 100 });

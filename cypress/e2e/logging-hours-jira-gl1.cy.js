@@ -3,7 +3,6 @@ beforeEach(() => {
   cy.clearLocalStorage();
 });
 describe("log work hours", () => {
-  // Ignore the first test case as per your request
   it("logs into Jira and applies the filter for a specific sprint", () => {
     // Handle exceptions for ResizeObserver
     cy.on("uncaught:exception", (err) => {
