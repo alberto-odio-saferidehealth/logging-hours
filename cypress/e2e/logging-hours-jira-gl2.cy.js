@@ -228,7 +228,7 @@ describe("log work hours", () => {
                       .then(() => {
                         // Calculate hours based on tickets that need logging
                         const ticketsToLogCount = ticketsWithoutLog.length;
-                        const hoursPerTicket = 64 / ticketsToLogCount;
+                        const hoursPerTicket = 70 / ticketsToLogCount;
 
                         // Ensure we are processing the first ticket first
                         if (ticketsToLogCount > 0) {
