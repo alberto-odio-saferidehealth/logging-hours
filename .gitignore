@@ -1,2 +1,5 @@
-logging-hours-salesforce.cy.js
+logging-hours-jira-gl1-ui.cy.js
+logging-hours-jira-gl2-ui.cy.js
+logging-hours-jira-gl1.cy.js
+logging-hours-jira-gl2.cy.js
 .DS_Store
