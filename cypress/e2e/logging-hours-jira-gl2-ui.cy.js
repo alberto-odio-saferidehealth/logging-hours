@@ -21,19 +21,10 @@ describe("log work hours", () => {
     });
 
     // Set the necessary cookies for Jira authentication
-    cy.setCookie("JSESSIONID", "bv2zqYvMKTIqSymlVbBRwCJJLbnfs0rIFPG_sRkr");
-    cy.setCookie(
-      "ajs_anonymous_id",
-      "%226956b0dc-94c5-4c06-aba5-923ba06577d1%22"
-    );
-    cy.setCookie(
-      "atlassian.xsrf.token",
-      "41ebcf1f1f45a7af9957e826c48566981be1d054_lin"
-    );
-    cy.setCookie(
-      "tenant.session.token",
-      "eyJraWQiOiJzZXNzaW9uLXNlcnZpY2UvcHJvZC0xNTkyODU4Mzk0IiwiYWxnIjoiUlMyNTYifQ.eyJhc3NvY2lhdGlvbnMiOlt7ImFhSWQiOiI3MTIwMjA6OWE5YTk5NzItMjZkNi00MGY2LWE0ZWItOTA2MGI4ZTY3OWE5Iiwic2Vzc2lvbklkIjoiMDM2YjUxYTItZTM3Zi00OTUzLWE4NmUtZTYxOTZkNWMyYzI3IiwiZW1haWwiOiJib2doZWhvQGdtYWlsLmNvbSJ9XSwic3ViIjoiNzEyMDIwOmU0Njc0ZmJmLWQ5YzctNDExZi05ZjAzLWEyOTgyMjIyOWE4OSIsImVtYWlsRG9tYWluIjoic2FmZXJpZGVoZWFsdGguY29tIiwiaW1wZXJzb25hdGlvbiI6W10sImNyZWF0ZWQiOjE3MjQ2Mzg0NDUsInJlZnJlc2hUaW1lb3V0IjoxNzI3MzgyMjcwLCJ2ZXJpZmllZCI6dHJ1ZSwiaXNzIjoic2Vzc2lvbi1zZXJ2aWNlIiwic2Vzc2lvbklkIjoiZDIwN2MyMmYtZGJkYS00MTdmLTljNGEtOWEyNjIxYzc5MGQzIiwic3RlcFVwcyI6W10sImF1ZCI6ImF0bGFzc2lhbiIsIm5iZiI6MTcyNzM4MTY3MCwiZXhwIjoxNzI5OTczNjcwLCJpYXQiOjE3MjczODE2NzAsImVtYWlsIjoiYWxiZXJ0by5vZGlvQHNhZmVyaWRlaGVhbHRoLmNvbSIsImp0aSI6ImQyMDdjMjJmLWRiZGEtNDE3Zi05YzRhLTlhMjYyMWM3OTBkMyJ9.eKEMvcp1xkGZUx1y9tEmEs_d7YUtFvj-ylbsh5nQgqlCdwqMrIKv1nOGhoFCKdD1Um1TrqZMwFRTFQTEVa2P7AVaSQa_bX0T6NrtbeeniqfQ9ptgk5_KBB5OLlXJ2jAGd1CELfaK7ztkfowvYhbB2jEuJo_U2EuEs5xLWv94v-jzWoI5YmnvfkM2Wt_1hFdZdEpvikt5_EU6ZYOqMCp0VhB-wH6Y7ULW6PYCpr2DXPHB3EZjghCAhiQXvXuI2dJRtf2AroOXzYlK4M_PDZ4bj2rwprJAxRxlwb1irMUn2blh3rzsL25f_Vu2c3E1PPjl64gGCI4-KTcpwb78DYa7Bw"
-    );
+    cy.setCookie("JSESSIONID", "place-your-cookie-here");
+    cy.setCookie("ajs_anonymous_id", "place-your-cookie-here");
+    cy.setCookie("atlassian.xsrf.token", "place-your-cookie-here");
+    cy.setCookie("tenant.session.token", "place-your-cookie-here");
     // Visit Jira filter URL
     cy.visit("https://saferidehealth.atlassian.net/issues/?filter=10221");
 
