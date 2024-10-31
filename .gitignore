@@ -1,5 +1,1 @@
-cypress/e2e/logging-hours-jira-gl1-ui.cy.js
-cypress/e2e/logging-hours-jira-gl2-ui.cy.js
-cypress/e2e/logging-hours-jira-gl1.cy.js
-cypress/e2e/logging-hours-jira-gl2.cy.js
 .DS_Store
