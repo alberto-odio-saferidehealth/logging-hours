@@ -41,7 +41,12 @@ describe("log work hours", () => {
     );
 
     // Wait for the profile image (span) to become visible and then click on it
-    cy.get("span.css-opco9n", { timeout: 10000 }).should("be.visible").click();
+    cy.get(
+      'div[data-testid="atlassian-navigation--secondary-actions--profile--menu-trigger"]',
+      { timeout: 10000 }
+    )
+      .should("be.visible")
+      .click();
 
     // Get the user's name from the dropdown
     cy.get("div._vwz4gktf")
