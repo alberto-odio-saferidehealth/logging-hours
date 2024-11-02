@@ -56,21 +56,30 @@ describe("log work hours", () => {
         cy.get('div[data-testid="jql-editor-input"]', { timeout: 60000 })
           .should("be.visible")
           .then(($editor) => {
-            // Use environment variables for sprint ID and role
-            const sprintValue = Cypress.env("sprintID"); // Get sprint ID from environment variable
+            // Use lowercase environment variables for sprint id, role, and pod
+            const sprintValue = Cypress.env("sprintid"); // Get sprint id from environment variable
             const role = Cypress.env("role"); // Get role from environment variable
+            const pod = Cypress.env("pod"); // Get pod from environment variable (e.g., "gl1" or "gl2")
 
-            if (!sprintValue || !role) {
+            if (!sprintValue || !role || !pod) {
               throw new Error(
-                "Both Sprint ID and role are required. Pass them as environment variables."
+                "sprint id, role, and pod are required. Pass them as environment variables."
               );
             } else {
-              // Define the JQL queries
-              const devJQL = `project = "GL" AND ("developer owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation", "Code review", "In QA", "Ready for QA") ORDER BY created DESC`;
-              const qaJQL = `project = "GL" AND ("qa owner[user picker (single user)]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation") ORDER BY created DESC`;
+              // Define the JQL queries for both gl1 and gl2
+              const jqlQueries = {
+                gl1: {
+                  dev: `project = "GL" AND ("developer owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation", "Code review", "In QA", "Ready for QA") ORDER BY created DESC`,
+                  qa: `project = "GL" AND ("qa owner[user picker (single user)]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation") ORDER BY created DESC`,
+                },
+                gl2: {
+                  dev: `project = "GL2" AND ("user story dev owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in Sandbox", "PO validation", "Delivered to release branch", "Code review", "In QA", "Ready for QA") ORDER BY created DESC`,
+                  qa: `project = "GL2" AND ("qa owner[user picker (single user)]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in Sandbox", "PO validation", "Delivered to release branch") ORDER BY created DESC`,
+                },
+              };
 
-              // Select the appropriate JQL based on the role
-              const jqlQuery = role === "dev" ? devJQL : qaJQL;
+              // Select the appropriate JQL based on the role and pod
+              const jqlQuery = jqlQueries[pod][role];
 
               // Focus the JQL editor, clear existing content, and type the query
               cy.wrap($editor).click().focused().clear();
@@ -161,7 +170,7 @@ describe("log work hours", () => {
                         .then(() => {
                           // Click the ticket
                           cy.wrap($el)
-                            .find('a[href^="/browse/GL-"]')
+                            .find('a[href^="/browse/GL"]')
                             .should("be.visible")
                             .click({ force: true });
 
