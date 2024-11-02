@@ -56,15 +56,22 @@ describe("log work hours", () => {
         cy.get('div[data-testid="jql-editor-input"]', { timeout: 60000 })
           .should("be.visible")
           .then(($editor) => {
-            // Use an environment variable for sprint ID
+            // Use environment variables for sprint ID and role
             const sprintValue = Cypress.env("sprintID"); // Get sprint ID from environment variable
-            if (!sprintValue) {
+            const role = Cypress.env("role"); // Get role from environment variable
+
+            if (!sprintValue || !role) {
               throw new Error(
-                "Sprint ID is required. Pass it as an environment variable."
+                "Both Sprint ID and role are required. Pass them as environment variables."
               );
             } else {
-              // Create the JQL query
-              const jqlQuery = `project = "GL" AND ("qa owner[user picker (single user)]" = currentUser() OR "developer owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done in Stage", "PO validation") ORDER BY created DESC`;
+              // Define the JQL queries
+              const devJQL = `project = "GL" AND ("developer owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation", "Code review", "In QA", "Ready for QA") ORDER BY created DESC`;
+              const qaJQL = `project = "GL" AND ("qa owner[user picker (single user)]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation") ORDER BY created DESC`;
+
+              // Select the appropriate JQL based on the role
+              const jqlQuery = role === "dev" ? devJQL : qaJQL;
+
               // Focus the JQL editor, clear existing content, and type the query
               cy.wrap($editor).click().focused().clear();
               cy.wrap($editor).type(`${jqlQuery}{enter}`, { delay: 100 });
