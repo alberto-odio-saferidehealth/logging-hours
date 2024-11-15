@@ -131,8 +131,9 @@ describe("log work hours", () => {
                         // Check for the "Log work" button or clock icon
                         cy.get("body").then(($body) => {
                           if (
-                            $body.find("span.css-178ag6o:contains('Log work')")
-                              .length > 0
+                            $body.find(
+                              'button[data-testid="issue.activity.worklog.worklog-items.empty-state.worklog-button-click"] span:contains("Log work")'
+                            ).length > 0
                           ) {
                             // "Log work" button exists, meaning no work is logged
                             ticketsWithoutLog.push($tickets[0]); // Add to the list of tickets without logs
@@ -212,7 +213,7 @@ describe("log work hours", () => {
                               cy.get("body").then(($body) => {
                                 if (
                                   $body.find(
-                                    "span.css-178ag6o:contains('Log work')"
+                                    'button[data-testid="issue.activity.worklog.worklog-items.empty-state.worklog-button-click"] span:contains("Log work")'
                                   ).length > 0
                                 ) {
                                   ticketsWithoutLog.push($el); // Add to the list of tickets without logs
@@ -275,13 +276,13 @@ describe("log work hours", () => {
                         // Wait for the page to load
                         cy.wait(3000);
 
-                        // Scroll to and click the Time tracking element using its full class list
+                        // Scroll to and click the Time tracking element
                         cy.get(
-                          "div._ca0qidpf._n3tdidpf._19bv12x7._u5f3idpf._2hwx1i6y._1tke1ejb"
+                          'div[data-testid="issue.component.progress-tracker.progress-bar.progress-bar-container"]'
                         )
                           .scrollIntoView()
-                          .should("be.visible")
-                          .click({ force: true });
+                          .should("exist") // Ensure it exists
+                          .click({ force: true }); // Force the click to ensure interaction
 
                         // Wait for the time tracking UI to load
                         cy.wait(3000);
@@ -296,7 +297,9 @@ describe("log work hours", () => {
                           });
 
                         // Wait for the Save button to become enabled before clicking
-                        cy.get("button.css-1jk3zmn") // Use the button's class that was shown in your previous screenshot
+                        cy.get(
+                          'button[data-testid="issue.common.component.log-time-modal.modal.footer.save-button"]'
+                        ) // Use the stable data-testid
                           .should("exist") // Ensure the button exists
                           .should("not.be.disabled") // Wait until it's no longer disabled
                           .click({ force: true }); // Force the click
@@ -309,7 +312,7 @@ describe("log work hours", () => {
                       if (ticketsToLogCount > 1) {
                         cy.wrap(ticketsWithoutLog.slice(1)).each(
                           ($ticket, index) => {
-                            // Click the next ticket using the data-testid
+                            // Click the next ticket
                             cy.wrap($ticket)
                               .scrollIntoView()
                               .should("be.visible")
@@ -328,7 +331,7 @@ describe("log work hours", () => {
                             // Wait for the page to load
                             cy.wait(3000);
 
-                            // Scroll to and click the third Time tracking element directly
+                            // Scroll to and click the Time tracking element
                             cy.get(
                               'div[data-testid="issue.component.progress-tracker.progress-bar.progress-bar-container"]'
                             )
@@ -349,7 +352,9 @@ describe("log work hours", () => {
                               });
 
                             // Wait for the Save button to become enabled before clicking
-                            cy.get("button.css-1jk3zmn") // Use the button's class that was shown in your previous screenshot
+                            cy.get(
+                              'button[data-testid="issue.common.component.log-time-modal.modal.footer.save-button"]'
+                            ) // Use the stable data-testid
                               .should("exist") // Ensure the button exists
                               .should("not.be.disabled") // Wait until it's no longer disabled
                               .click({ force: true }); // Force the click
