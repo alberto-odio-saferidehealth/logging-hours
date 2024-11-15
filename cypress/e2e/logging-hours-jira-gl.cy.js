@@ -25,20 +25,30 @@ describe("log work hours", () => {
     cy.setCookie("ajs_anonymous_id", "place-your-cookie-here");
     cy.setCookie("atlassian.xsrf.token", "place-your-cookie-here");
     cy.setCookie("tenant.session.token", "place-your-cookie-here");
+
     // Visit Jira filter URL
     cy.visit("https://saferidehealth.atlassian.net/issues/?filter=10221");
 
+    // Wait for the page to load
+    cy.wait(6000);
+
     // Check if we are in BASIC mode and force a switch to JQL if necessary
-    cy.get('label[for="toggle-buttons-3-advanced"]', { timeout: 10000 }).then(
-      ($label) => {
-        cy.get('div[class*="css"]').then(($div) => {
-          if ($div.hasClass("css-zkrq6v")) {
-            // We are in BASIC mode, click the label to switch to JQL
-            cy.wrap($label).click();
+    cy.get('label[for^="toggle-buttons-"][for$="-advanced"]', {
+      timeout: 10000,
+    })
+      .should("exist")
+      .then(($label) => {
+        // Try to get the search field, but don't fail if it doesn't exist
+        cy.get("body").then(($body) => {
+          if ($body.find('[data-test-id="searchfield"]').length > 0) {
+            const $searchField = $body.find('[data-test-id="searchfield"]');
+            if ($searchField.is(":visible")) {
+              // We are in BASIC mode, click the label to switch to JQL
+              cy.wrap($label).click({ force: true });
+            }
           }
         });
-      }
-    );
+      });
 
     // Wait for the profile image (span) to become visible and then click on it
     cy.get(
@@ -81,6 +91,8 @@ describe("log work hours", () => {
               // Select the appropriate JQL based on the role and pod
               const jqlQuery = jqlQueries[pod][role];
 
+              //Wait for the page to load
+              cy.wait(6000);
               // Focus the JQL editor, clear existing content, and type the query
               cy.wrap($editor).click().focused().clear();
               cy.wrap($editor).type(`${jqlQuery}{enter}`, { delay: 100 });
@@ -316,13 +328,13 @@ describe("log work hours", () => {
                             // Wait for the page to load
                             cy.wait(3000);
 
-                            // Scroll to and click the Time tracking element using its full class list
+                            // Scroll to and click the third Time tracking element directly
                             cy.get(
-                              "div._ca0qidpf._n3tdidpf._19bv12x7._u5f3idpf._2hwx1i6y._1tke1ejb"
+                              'div[data-testid="issue.component.progress-tracker.progress-bar.progress-bar-container"]'
                             )
                               .scrollIntoView()
-                              .should("be.visible")
-                              .click({ force: true });
+                              .should("exist") // Ensure it exists
+                              .click({ force: true }); // Force the click to ensure interaction
 
                             // Wait for the time tracking UI to load
                             cy.wait(3000);
