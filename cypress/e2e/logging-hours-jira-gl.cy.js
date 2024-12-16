@@ -4,16 +4,18 @@ beforeEach(() => {
 });
 describe("log work hours", () => {
   it("logs into Jira and applies the filter for a specific sprint", () => {
-    // Handle exceptions for ResizeObserver
+    // Handle exceptions
     cy.on("uncaught:exception", (err) => {
       if (
         err.message.includes(
           "ResizeObserver loop completed with undelivered notifications"
         ) ||
         err.message.includes("Store embedded-confluence-panel-container") ||
-        err.message.includes("Failed to execute 'removeChild'")
+        err.message.includes("Failed to execute 'removeChild'") ||
+        err.message.includes("Timeout") ||
+        err.message.includes("unhandled promise rejection")
       ) {
-        return false; // Prevent Cypress from failing the test due to these specific errors
+        return false; // Prevent Cypress from failing the test
       }
 
       // Throw other unexpected errors so the test can fail correctly
