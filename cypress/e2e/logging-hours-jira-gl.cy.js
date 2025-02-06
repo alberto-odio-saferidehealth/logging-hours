@@ -81,12 +81,16 @@ describe("log work hours", () => {
               // Define the JQL queries for both gl1 and gl2
               const jqlQueries = {
                 gl1: {
-                  dev: `project = "GL" AND ("developer owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation", "Code review", "In QA", "Ready for QA") ORDER BY created DESC`,
-                  qa: `project = "GL" AND ("qa owner[user picker (single user)]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation") ORDER BY created DESC`,
+                  dev: `project = "GL" AND ("developer owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation", "Code review", "Ready for QA", "In QA") ORDER BY created DESC`,
+                  qa: `project = "GL" AND ("qa owner[user picker (single user)]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation", "In QA") ORDER BY created DESC`,
                 },
                 gl2: {
-                  dev: `project = "GL2" AND ("user story dev owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in Sandbox", "PO validation", "Delivered to release branch", "Code review", "In QA", "Ready for QA") ORDER BY created DESC`,
-                  qa: `project = "GL2" AND ("qa owner[user picker (single user)]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in Sandbox", "PO validation", "Delivered to release branch") ORDER BY created DESC`,
+                  dev: `project = "GL2" AND ("user story dev owner[people]" = currentUser()) OR ("Task Dev Owner[People]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in Sandbox", "PO validation", "Delivered to release branch", "Code review", "In QA", "Ready for QA") ORDER BY created DESC`,
+                  qa: `project = "GL2" AND ("qa owner[user picker (single user)]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in Sandbox", "PO validation", "Delivered to release branch", "In QA") ORDER BY created DESC`,
+                },
+                gl3: {
+                  dev: `project = "GL3" AND ("developer owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation", "Code review", "In QA", "Ready for QA") ORDER BY created DESC`,
+                  qa: `project = "GL3" AND ("qa owner[people]" = currentUser()) AND sprint = ${sprintValue} AND status IN ("Done in sandbox", "Done", "PO validation", "In QA") ORDER BY created DESC`,
                 },
               };
 
