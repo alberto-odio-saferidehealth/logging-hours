@@ -54,11 +54,15 @@ describe("Remove Sprint from Jira Tickets", () => {
       .should("be.visible")
       .then(() => {
         cy.get(
-          'div[data-component-selector="jira-issue-view-select-inline-edit-read-view-container"]',
+          'div[data-testid="issue.views.issue-details.issue-layout.container-right"]'
+        ).scrollTo("bottom");
+        cy.get(
+          'div[data-testid="issue-field-inline-edit-read-view-container.ui.container"]',
           { timeout: 10000 }
         )
+          .eq(6)
+          .scrollIntoView()
           .should("be.visible")
-          .first()
           .click({ force: true });
         cy.get('input[role="combobox"]')
           .should("be.visible")
@@ -79,11 +83,15 @@ describe("Remove Sprint from Jira Tickets", () => {
                   .click({ force: true });
                 cy.wait(3000);
                 cy.get(
-                  'div[data-component-selector="jira-issue-view-select-inline-edit-read-view-container"]',
+                  'div[data-testid="issue.views.issue-details.issue-layout.container-right"]'
+                ).scrollTo("bottom");
+                cy.get(
+                  'div[data-testid="issue-field-inline-edit-read-view-container.ui.container"]',
                   { timeout: 10000 }
                 )
+                  .eq(6)
+                  .scrollIntoView()
                   .should("be.visible")
-                  .first()
                   .click({ force: true });
                 cy.get('input[role="combobox"]')
                   .should("be.visible")
