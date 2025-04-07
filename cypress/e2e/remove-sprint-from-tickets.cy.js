@@ -60,7 +60,7 @@ describe("Remove Sprint from Jira Tickets", () => {
           'div[data-testid="issue-field-inline-edit-read-view-container.ui.container"]',
           { timeout: 10000 }
         )
-          .eq(7)
+          .eq(8)
           .scrollIntoView()
           .should("be.visible")
           .click({ force: true });
@@ -89,7 +89,7 @@ describe("Remove Sprint from Jira Tickets", () => {
                   'div[data-testid="issue-field-inline-edit-read-view-container.ui.container"]',
                   { timeout: 10000 }
                 )
-                  .eq(7)
+                  .eq(8)
                   .scrollIntoView()
                   .should("be.visible")
                   .click({ force: true });
