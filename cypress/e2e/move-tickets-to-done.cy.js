@@ -52,13 +52,16 @@ describe("Update ticket status in Jira", () => {
     )
       .should("be.visible")
       .then(() => {
-        cy.get('div[data-testid="issue.views.issue-details.issue-layout.visibility-container"]', { timeout: 10000 })
-        .should("be.visible")
-        .within(() => {
-          cy.get('button[aria-label*="Done in sandbox"]', { timeout: 10000 })
-            .scrollIntoView()
-            .click({ force: true });
-        });
+        cy.get(
+          'div[data-testid="issue.views.issue-details.issue-layout.visibility-container"]',
+          { timeout: 10000 }
+        )
+          .should("be.visible")
+          .within(() => {
+            cy.get('button[aria-label*="Done in sandbox"]', { timeout: 10000 })
+              .scrollIntoView()
+              .click({ force: true });
+          });
         cy.wait(3000);
         cy.get(
           'div[data-testid="issue-field-status.ui.status-view.transition"]'
@@ -80,13 +83,18 @@ describe("Update ticket status in Jira", () => {
                   .should("be.visible")
                   .click({ force: true });
                 cy.wait(3000);
-                cy.get('div[data-testid="issue.views.issue-details.issue-layout.visibility-container"]', { timeout: 10000 })
-                .should("be.visible")
-                .within(() => {
-                  cy.get('button[aria-label*="Done in sandbox"]', { timeout: 10000 })
-                    .scrollIntoView()
-                    .click({ force: true });
-                });
+                cy.get(
+                  'div[data-testid="issue.views.issue-details.issue-layout.visibility-container"]',
+                  { timeout: 10000 }
+                )
+                  .should("be.visible")
+                  .within(() => {
+                    cy.get('button[aria-label*="Done in sandbox"]', {
+                      timeout: 10000,
+                    })
+                      .scrollIntoView()
+                      .click({ force: true });
+                  });
                 cy.wait(3000);
                 cy.get(
                   'div[data-testid="issue-field-status.ui.status-view.transition"]'
