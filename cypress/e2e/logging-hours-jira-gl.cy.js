@@ -71,7 +71,7 @@ describe("log work hours", () => {
           cy.wrap($editor).click().focused().clear();
           cy.wrap($editor).type(`${jqlQuery}{enter}`, { delay: 100 });
           cy.get(
-            'ul[aria-label="Issues"] li[data-testid^="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]',
+            'li[data-testid="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]',
             { timeout: 60000 }
           )
             .should("be.visible")
@@ -110,7 +110,7 @@ describe("log work hours", () => {
                         .click({ force: true });
                       cy.wait(2000);
                       cy.get(
-                        'ul[aria-label="Issues"] li[data-testid^="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]'
+                        'li[data-testid="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]'
                       ).each(($el, index) => {
                         if (index === 0) return;
                         cy.wrap($el)

@@ -48,7 +48,7 @@ describe("Remove Sprint from Jira Tickets", () => {
         cy.wrap($editor).type(`${jqlQuery}{enter}`, { delay: 100 });
       });
     cy.get(
-      'ul[aria-label="Issues"] li[data-testid^="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]',
+      'li[data-testid="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]',
       { timeout: 60000 }
     )
       .should("be.visible")
@@ -60,7 +60,7 @@ describe("Remove Sprint from Jira Tickets", () => {
           'div[data-testid="issue-field-inline-edit-read-view-container.ui.container"]',
           { timeout: 10000 }
         )
-          .eq(8)
+          .eq(10)
           .scrollIntoView()
           .should("be.visible")
           .click({ force: true });
@@ -69,7 +69,7 @@ describe("Remove Sprint from Jira Tickets", () => {
           .type("{backspace}", { force: true });
 
         cy.get(
-          'ul[aria-label="Issues"] li[data-testid^="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]'
+          'li[data-testid="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]'
         ).each(($el, index) => {
           if (index > 0) {
             cy.wrap($el)
@@ -89,7 +89,7 @@ describe("Remove Sprint from Jira Tickets", () => {
                   'div[data-testid="issue-field-inline-edit-read-view-container.ui.container"]',
                   { timeout: 10000 }
                 )
-                  .eq(8)
+                  .eq(10)
                   .scrollIntoView()
                   .should("be.visible")
                   .click({ force: true });

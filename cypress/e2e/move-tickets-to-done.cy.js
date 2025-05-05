@@ -47,14 +47,18 @@ describe("Update ticket status in Jira", () => {
         cy.wrap($editor).type(`${jqlQuery}{enter}`, { delay: 100 });
       });
     cy.get(
-      'ul[aria-label="Issues"] li[data-testid^="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]',
+      'li[data-testid="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]',
       { timeout: 60000 }
     )
       .should("be.visible")
       .then(() => {
-        cy.contains("span", "Done in sandbox", { timeout: 10000 })
-          .should("be.visible")
-          .click({ force: true });
+        cy.get('div[data-testid="issue.views.issue-details.issue-layout.visibility-container"]', { timeout: 10000 })
+        .should("be.visible")
+        .within(() => {
+          cy.get('button[aria-label*="Done in sandbox"]', { timeout: 10000 })
+            .scrollIntoView()
+            .click({ force: true });
+        });
         cy.wait(3000);
         cy.get(
           'div[data-testid="issue-field-status.ui.status-view.transition"]'
@@ -63,7 +67,7 @@ describe("Update ticket status in Jira", () => {
           .should("be.visible")
           .click({ force: true });
         cy.get(
-          'ul[aria-label="Issues"] li[data-testid^="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]'
+          'li[data-testid="issue-navigator.ui.issue-results.detail-view.card-list.card.list-item"]'
         ).each(($el, index) => {
           if (index > 0) {
             cy.wrap($el)
@@ -76,9 +80,13 @@ describe("Update ticket status in Jira", () => {
                   .should("be.visible")
                   .click({ force: true });
                 cy.wait(3000);
-                cy.contains("span", "Done in sandbox", { timeout: 10000 })
-                  .should("be.visible")
-                  .click({ force: true });
+                cy.get('div[data-testid="issue.views.issue-details.issue-layout.visibility-container"]', { timeout: 10000 })
+                .should("be.visible")
+                .within(() => {
+                  cy.get('button[aria-label*="Done in sandbox"]', { timeout: 10000 })
+                    .scrollIntoView()
+                    .click({ force: true });
+                });
                 cy.wait(3000);
                 cy.get(
                   'div[data-testid="issue-field-status.ui.status-view.transition"]'
